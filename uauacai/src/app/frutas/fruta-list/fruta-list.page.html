@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>frutas</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-searchbar placeholder="Pesquisar"
+    (ionClear)="doSearchClear()"
+    (ionChange)="doSerchBarChange($event)">
+  </ion-searchbar>
+
+  <ion-list>
+    <ion-item-sliding *ngFor="let fruta of frutas">
+      <ion-item>
+        <ion-label>{{fruta.nome}}</ion-label>
+      </ion-item>
+
+      <ion-item-options side="start">
+        <ion-item-options [routerLink]="['edit', fruta.id]">
+          <ion-icon slot="icon-only" name="creat" color="secundary"></ion-icon>
+        </ion-item-options>
+        <ion-item-options (click)="delete(fruta)">
+          <ion-icon slot="icon-only" name="trash" color="danger"></ion-icon>
+        </ion-item-options>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+
+  <ion-fab vertical="botton" horizontal="end" slot="fixed">
+    <ion-fab-button color="secondary" [routerLink]="['new']">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+</ion-content>

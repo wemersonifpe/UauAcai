@@ -1,0 +1,551 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="light">
+    <ion-title style="text-align: center; color: #ffffff;">
+      Uau Açai
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <ion-list>
+    <ion-radio-group [(ngModel)]="novoPedido.tamanho" (ionChange)="checkTamanho()">
+      <ion-list-header style="background: ghostwhite;">
+        <ion-label style="font-size: large; color: black;">Tamanho</ion-label>
+      </ion-list-header>
+      <ion-item>
+        <ion-label>
+          <ion-label>Pequeno</ion-label>
+          <ion-text>R$ 9,00</ion-text>
+        </ion-label>
+        <ion-radio value="pequeno" color="light"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>
+          <ion-label>Grande</ion-label>
+          <ion-text>R$ 13,00</ion-text>
+        </ion-label>
+        <ion-radio value="grande" color="light"></ion-radio>
+      </ion-item>
+    </ion-radio-group>
+  </ion-list>
+
+  <ion-list>
+    <ion-radio-group [(ngModel)]="novoPedido.recheio" (ionChange)="checkCreme()">
+      <ion-list-header style="background: ghostwhite;">
+        <ion-label style="font-size: large; color: black;">Recheio</ion-label>
+      </ion-list-header>
+      <ion-item>
+        <ion-label>Açai</ion-label>
+        <ion-radio value="acai" color="light"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>Cupuaçu</ion-label>
+        <ion-radio value="cupuacu" color="light"></ion-radio>
+      </ion-item>
+    </ion-radio-group>
+  </ion-list>
+
+  <ion-list>
+    <ion-radio-group [(ngModel)]="novoPedido.fruta" (ionChange)="checkFrutas()">
+      <ion-list-header style="background: ghostwhite;">
+        <ion-label style="font-size: large; color: black;">Fruta</ion-label>
+      </ion-list-header>
+      <ion-item>
+        <ion-label>Banana</ion-label>
+        <ion-radio value="banana" color="light"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>Morango</ion-label>
+        <ion-radio value="morango" color="light"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>Manga</ion-label>
+        <ion-radio value="manga" color="light"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>Kiwi</ion-label>
+        <ion-radio value="kiwi" color="light"></ion-radio>
+      </ion-item>
+    </ion-radio-group>
+  </ion-list>
+
+  <!-- Call function when state changes -->
+ <ion-list>
+    <ion-list-header style="background: ghostwhite;">
+      <ion-label style="font-size: large; color: black;">Acompanhamentos</ion-label>
+    </ion-list-header>
+    <ion-item>
+      <ion-label>Granola</ion-label>
+      <ion-checkbox color="light" [(ngModel)]="acomp.isG"
+      [disabled]="acomp.isL && acomp.isF && acomp.isS
+      || acomp.isL && acomp.isP && acomp.isS
+      || acomp.isL && acomp.isA && acomp.isS
+      || acomp.isL && acomp.isC && acomp.isS
+      || acomp.isL && acomp.isO && acomp.isS
+      || acomp.isL && acomp.isF && acomp.isP
+      || acomp.isL && acomp.isF && acomp.isA
+      || acomp.isL && acomp.isF && acomp.isC
+      || acomp.isL && acomp.isF && acomp.isO
+      || acomp.isP && acomp.isF && acomp.isS
+      || acomp.isA && acomp.isF && acomp.isS
+      || acomp.isC && acomp.isF && acomp.isS
+      || acomp.isO && acomp.isF && acomp.isS
+      || acomp.isO && acomp.isC && acomp.isA
+      || acomp.isO && acomp.isC && acomp.isP
+      || acomp.isO && acomp.isC && acomp.isS
+      || acomp.isO && acomp.isC && acomp.isF
+      || acomp.isO && acomp.isC && acomp.isL
+      || acomp.isP && acomp.isA && acomp.isS
+      || acomp.isP && acomp.isC && acomp.isS
+      || acomp.isP && acomp.isO && acomp.isS
+      || acomp.isP && acomp.isF && acomp.isA
+      || acomp.isP && acomp.isF && acomp.isC
+      || acomp.isP && acomp.isF && acomp.isO
+      || acomp.isL && acomp.isP && acomp.isA
+      || acomp.isL && acomp.isP && acomp.isC
+      || acomp.isL && acomp.isP && acomp.isO
+      || acomp.isL && acomp.isA && acomp.isC
+      || acomp.isL && acomp.isA && acomp.isO
+      || acomp.isF && acomp.isA && acomp.isO
+      || acomp.isF && acomp.isA && acomp.isC
+      || acomp.isS && acomp.isA && acomp.isC
+      || acomp.isS && acomp.isA && acomp.isO
+      || acomp.isP && acomp.isA && acomp.isO
+      || acomp.isP && acomp.isA && acomp.isC" (ionChange)="checkAcomp()"></ion-checkbox>
+    </ion-item>
+    <ion-item>
+      <ion-label>Leite em pó</ion-label>
+      <ion-checkbox color="light" [(ngModel)]="acomp.isL"
+      [disabled]="acomp.isG && acomp.isF && acomp.isS
+      || acomp.isG && acomp.isP && acomp.isS
+      || acomp.isG && acomp.isA && acomp.isS
+      || acomp.isG && acomp.isC && acomp.isS
+      || acomp.isG && acomp.isO && acomp.isS
+      || acomp.isG && acomp.isF && acomp.isP
+      || acomp.isG && acomp.isF && acomp.isA
+      || acomp.isG && acomp.isF && acomp.isC
+      || acomp.isG && acomp.isF && acomp.isO
+      || acomp.isP && acomp.isF && acomp.isS
+      || acomp.isA && acomp.isF && acomp.isS
+      || acomp.isC && acomp.isF && acomp.isS
+      || acomp.isO && acomp.isF && acomp.isS
+      || acomp.isO && acomp.isC && acomp.isA
+      || acomp.isO && acomp.isC && acomp.isP
+      || acomp.isO && acomp.isC && acomp.isS
+      || acomp.isO && acomp.isC && acomp.isF
+      || acomp.isO && acomp.isC && acomp.isG
+      || acomp.isP && acomp.isA && acomp.isS
+      || acomp.isP && acomp.isC && acomp.isS
+      || acomp.isP && acomp.isO && acomp.isS
+      || acomp.isP && acomp.isF && acomp.isA
+      || acomp.isP && acomp.isF && acomp.isC
+      || acomp.isP && acomp.isF && acomp.isO
+      || acomp.isG && acomp.isP && acomp.isA
+      || acomp.isG && acomp.isP && acomp.isC
+      || acomp.isG && acomp.isP && acomp.isO
+      || acomp.isG && acomp.isA && acomp.isC
+      || acomp.isG && acomp.isA && acomp.isO
+      || acomp.isF && acomp.isA && acomp.isO
+      || acomp.isF && acomp.isA && acomp.isC
+      || acomp.isS && acomp.isA && acomp.isC
+      || acomp.isS && acomp.isA && acomp.isO
+      || acomp.isP && acomp.isA && acomp.isO
+      || acomp.isP && acomp.isA && acomp.isC" (ionChange)="checkAcomp()"></ion-checkbox>
+    </ion-item>
+    <ion-item>
+      <ion-label>Frarinha Láctea</ion-label>
+      <ion-checkbox color="light" [(ngModel)]="acomp.isF"
+      [disabled]="acomp.isL && acomp.isG && acomp.isS
+      || acomp.isL && acomp.isP && acomp.isS
+      || acomp.isL && acomp.isA && acomp.isS
+      || acomp.isL && acomp.isC && acomp.isS
+      || acomp.isL && acomp.isO && acomp.isS
+      || acomp.isL && acomp.isG && acomp.isP
+      || acomp.isL && acomp.isG && acomp.isA
+      || acomp.isL && acomp.isG && acomp.isC
+      || acomp.isL && acomp.isG && acomp.isO
+      || acomp.isP && acomp.isG && acomp.isS
+      || acomp.isA && acomp.isG && acomp.isS
+      || acomp.isC && acomp.isG && acomp.isS
+      || acomp.isO && acomp.isG && acomp.isS
+      || acomp.isO && acomp.isC && acomp.isA
+      || acomp.isO && acomp.isC && acomp.isP
+      || acomp.isO && acomp.isC && acomp.isS
+      || acomp.isO && acomp.isC && acomp.isG
+      || acomp.isO && acomp.isC && acomp.isL
+      || acomp.isP && acomp.isA && acomp.isS
+      || acomp.isP && acomp.isC && acomp.isS
+      || acomp.isP && acomp.isO && acomp.isS
+      || acomp.isP && acomp.isG && acomp.isA
+      || acomp.isP && acomp.isG && acomp.isC
+      || acomp.isP && acomp.isG && acomp.isO
+      || acomp.isL && acomp.isP && acomp.isA
+      || acomp.isL && acomp.isP && acomp.isC
+      || acomp.isL && acomp.isP && acomp.isO
+      || acomp.isL && acomp.isA && acomp.isC
+      || acomp.isL && acomp.isA && acomp.isO
+      || acomp.isG && acomp.isA && acomp.isO
+      || acomp.isG && acomp.isA && acomp.isC
+      || acomp.isS && acomp.isA && acomp.isC
+      || acomp.isS && acomp.isA && acomp.isO
+      || acomp.isP && acomp.isA && acomp.isO
+      || acomp.isP && acomp.isA && acomp.isC" (ionChange)="checkAcomp()"></ion-checkbox>
+    </ion-item>
+    <ion-item>
+      <ion-label>Sucrilhos</ion-label>
+      <ion-checkbox color="light" [(ngModel)]="acomp.isS"
+      [disabled]="acomp.isL && acomp.isF && acomp.isG
+      || acomp.isL && acomp.isP && acomp.isG
+      || acomp.isL && acomp.isA && acomp.isG
+      || acomp.isL && acomp.isC && acomp.isG
+      || acomp.isL && acomp.isO && acomp.isG
+      || acomp.isL && acomp.isF && acomp.isP
+      || acomp.isL && acomp.isF && acomp.isA
+      || acomp.isL && acomp.isF && acomp.isC
+      || acomp.isL && acomp.isF && acomp.isO
+      || acomp.isP && acomp.isF && acomp.isG
+      || acomp.isA && acomp.isF && acomp.isG
+      || acomp.isC && acomp.isF && acomp.isG
+      || acomp.isO && acomp.isF && acomp.isG
+      || acomp.isO && acomp.isC && acomp.isA
+      || acomp.isO && acomp.isC && acomp.isP
+      || acomp.isO && acomp.isC && acomp.isG
+      || acomp.isO && acomp.isC && acomp.isF
+      || acomp.isO && acomp.isC && acomp.isL
+      || acomp.isP && acomp.isA && acomp.isG
+      || acomp.isP && acomp.isC && acomp.isG
+      || acomp.isP && acomp.isO && acomp.isG
+      || acomp.isP && acomp.isF && acomp.isA
+      || acomp.isP && acomp.isF && acomp.isC
+      || acomp.isP && acomp.isF && acomp.isO
+      || acomp.isL && acomp.isP && acomp.isA
+      || acomp.isL && acomp.isP && acomp.isC
+      || acomp.isL && acomp.isP && acomp.isO
+      || acomp.isL && acomp.isA && acomp.isC
+      || acomp.isL && acomp.isA && acomp.isO
+      || acomp.isF && acomp.isA && acomp.isO
+      || acomp.isF && acomp.isA && acomp.isC
+      || acomp.isG && acomp.isA && acomp.isC
+      || acomp.isG && acomp.isA && acomp.isO
+      || acomp.isP && acomp.isA && acomp.isO
+      || acomp.isP && acomp.isA && acomp.isC" (ionChange)="checkAcomp()"></ion-checkbox>
+    </ion-item>
+    <ion-item>
+      <ion-label>Paçoca</ion-label>
+      <ion-checkbox color="light" [(ngModel)]="acomp.isP"
+      [disabled]="acomp.isL && acomp.isF && acomp.isS
+      || acomp.isL && acomp.isG && acomp.isS
+      || acomp.isL && acomp.isA && acomp.isS
+      || acomp.isL && acomp.isC && acomp.isS
+      || acomp.isL && acomp.isO && acomp.isS
+      || acomp.isL && acomp.isF && acomp.isG
+      || acomp.isL && acomp.isF && acomp.isA
+      || acomp.isL && acomp.isF && acomp.isC
+      || acomp.isL && acomp.isF && acomp.isO
+      || acomp.isG && acomp.isF && acomp.isS
+      || acomp.isA && acomp.isF && acomp.isS
+      || acomp.isC && acomp.isF && acomp.isS
+      || acomp.isO && acomp.isF && acomp.isS
+      || acomp.isO && acomp.isC && acomp.isA
+      || acomp.isO && acomp.isC && acomp.isG
+      || acomp.isO && acomp.isC && acomp.isS
+      || acomp.isO && acomp.isC && acomp.isF
+      || acomp.isO && acomp.isC && acomp.isL
+      || acomp.isG && acomp.isA && acomp.isS
+      || acomp.isG && acomp.isC && acomp.isS
+      || acomp.isG && acomp.isO && acomp.isS
+      || acomp.isG && acomp.isF && acomp.isA
+      || acomp.isG && acomp.isF && acomp.isC
+      || acomp.isG && acomp.isF && acomp.isO
+      || acomp.isL && acomp.isG && acomp.isA
+      || acomp.isL && acomp.isG && acomp.isC
+      || acomp.isL && acomp.isG && acomp.isO
+      || acomp.isL && acomp.isA && acomp.isC
+      || acomp.isL && acomp.isA && acomp.isO
+      || acomp.isF && acomp.isA && acomp.isO
+      || acomp.isF && acomp.isA && acomp.isC
+      || acomp.isS && acomp.isA && acomp.isC
+      || acomp.isS && acomp.isA && acomp.isO
+      || acomp.isG && acomp.isA && acomp.isO
+      || acomp.isG && acomp.isA && acomp.isC" (ionChange)="checkAcomp()"></ion-checkbox>
+    </ion-item>
+    <ion-item>
+      <ion-label>Amendoin Granulado</ion-label>
+      <ion-checkbox color="light" [(ngModel)]="acomp.isA"
+      [disabled]="acomp.isL && acomp.isF && acomp.isS
+      || acomp.isL && acomp.isP && acomp.isS
+      || acomp.isL && acomp.isG && acomp.isS
+      || acomp.isL && acomp.isC && acomp.isS
+      || acomp.isL && acomp.isO && acomp.isS
+      || acomp.isL && acomp.isF && acomp.isP
+      || acomp.isL && acomp.isF && acomp.isG
+      || acomp.isL && acomp.isF && acomp.isC
+      || acomp.isL && acomp.isF && acomp.isO
+      || acomp.isP && acomp.isF && acomp.isS
+      || acomp.isG && acomp.isF && acomp.isS
+      || acomp.isC && acomp.isF && acomp.isS
+      || acomp.isO && acomp.isF && acomp.isS
+      || acomp.isO && acomp.isC && acomp.isG
+      || acomp.isO && acomp.isC && acomp.isP
+      || acomp.isO && acomp.isC && acomp.isS
+      || acomp.isO && acomp.isC && acomp.isF
+      || acomp.isO && acomp.isC && acomp.isL
+      || acomp.isP && acomp.isG && acomp.isS
+      || acomp.isP && acomp.isC && acomp.isS
+      || acomp.isP && acomp.isO && acomp.isS
+      || acomp.isP && acomp.isF && acomp.isG
+      || acomp.isP && acomp.isF && acomp.isC
+      || acomp.isP && acomp.isF && acomp.isO
+      || acomp.isL && acomp.isP && acomp.isG
+      || acomp.isL && acomp.isP && acomp.isC
+      || acomp.isL && acomp.isP && acomp.isO
+      || acomp.isL && acomp.isG && acomp.isC
+      || acomp.isL && acomp.isG && acomp.isO
+      || acomp.isF && acomp.isG && acomp.isO
+      || acomp.isF && acomp.isG && acomp.isC
+      || acomp.isS && acomp.isG && acomp.isC
+      || acomp.isS && acomp.isG && acomp.isO
+      || acomp.isP && acomp.isG && acomp.isO
+      || acomp.isP && acomp.isG && acomp.isC" (ionChange)="checkAcomp()"></ion-checkbox>
+    </ion-item>
+    <ion-item>
+      <ion-label>Chocobool</ion-label>
+      <ion-checkbox color="light" [(ngModel)]="acomp.isC"
+      [disabled]="acomp.isL && acomp.isF && acomp.isS
+      || acomp.isL && acomp.isP && acomp.isS
+      || acomp.isL && acomp.isA && acomp.isS
+      || acomp.isL && acomp.isG && acomp.isS
+      || acomp.isL && acomp.isO && acomp.isS
+      || acomp.isL && acomp.isF && acomp.isP
+      || acomp.isL && acomp.isF && acomp.isA
+      || acomp.isL && acomp.isF && acomp.isG
+      || acomp.isL && acomp.isF && acomp.isO
+      || acomp.isP && acomp.isF && acomp.isS
+      || acomp.isA && acomp.isF && acomp.isS
+      || acomp.isG && acomp.isF && acomp.isS
+      || acomp.isO && acomp.isF && acomp.isS
+      || acomp.isO && acomp.isG && acomp.isA
+      || acomp.isO && acomp.isG && acomp.isP
+      || acomp.isO && acomp.isG && acomp.isS
+      || acomp.isO && acomp.isG && acomp.isF
+      || acomp.isO && acomp.isG && acomp.isL
+      || acomp.isP && acomp.isA && acomp.isS
+      || acomp.isP && acomp.isG && acomp.isS
+      || acomp.isP && acomp.isO && acomp.isS
+      || acomp.isP && acomp.isF && acomp.isA
+      || acomp.isP && acomp.isF && acomp.isG
+      || acomp.isP && acomp.isF && acomp.isO
+      || acomp.isL && acomp.isP && acomp.isA
+      || acomp.isL && acomp.isP && acomp.isG
+      || acomp.isL && acomp.isP && acomp.isO
+      || acomp.isL && acomp.isA && acomp.isG
+      || acomp.isL && acomp.isA && acomp.isO
+      || acomp.isF && acomp.isA && acomp.isO
+      || acomp.isF && acomp.isA && acomp.isG
+      || acomp.isS && acomp.isA && acomp.isG
+      || acomp.isS && acomp.isA && acomp.isO
+      || acomp.isP && acomp.isA && acomp.isO
+      || acomp.isP && acomp.isA && acomp.isG" (ionChange)="checkAcomp()"></ion-checkbox>
+    </ion-item>
+    <ion-item>
+      <ion-label>Ovomaltine</ion-label>
+      <ion-checkbox color="light" [(ngModel)]="acomp.isO"
+      [disabled]="acomp.isL && acomp.isF && acomp.isS
+      || acomp.isL && acomp.isP && acomp.isS
+      || acomp.isL && acomp.isA && acomp.isS
+      || acomp.isL && acomp.isC && acomp.isS
+      || acomp.isL && acomp.isG && acomp.isS
+      || acomp.isL && acomp.isF && acomp.isP
+      || acomp.isL && acomp.isF && acomp.isA
+      || acomp.isL && acomp.isF && acomp.isC
+      || acomp.isL && acomp.isF && acomp.isG
+      || acomp.isP && acomp.isF && acomp.isS
+      || acomp.isA && acomp.isF && acomp.isS
+      || acomp.isC && acomp.isF && acomp.isS
+      || acomp.isG && acomp.isF && acomp.isS
+      || acomp.isG && acomp.isC && acomp.isA
+      || acomp.isG && acomp.isC && acomp.isP
+      || acomp.isG && acomp.isC && acomp.isS
+      || acomp.isG && acomp.isC && acomp.isF
+      || acomp.isG && acomp.isC && acomp.isL
+      || acomp.isP && acomp.isA && acomp.isS
+      || acomp.isP && acomp.isC && acomp.isS
+      || acomp.isP && acomp.isG && acomp.isS
+      || acomp.isP && acomp.isF && acomp.isA
+      || acomp.isP && acomp.isF && acomp.isC
+      || acomp.isP && acomp.isF && acomp.isG
+      || acomp.isL && acomp.isP && acomp.isA
+      || acomp.isL && acomp.isP && acomp.isC
+      || acomp.isL && acomp.isP && acomp.isG
+      || acomp.isL && acomp.isA && acomp.isC
+      || acomp.isL && acomp.isA && acomp.isG
+      || acomp.isF && acomp.isA && acomp.isG
+      || acomp.isF && acomp.isA && acomp.isC
+      || acomp.isS && acomp.isA && acomp.isC
+      || acomp.isS && acomp.isA && acomp.isG
+      || acomp.isP && acomp.isA && acomp.isG
+      || acomp.isP && acomp.isA && acomp.isC" (ionChange)="checkAcomp()"></ion-checkbox>
+    </ion-item>
+  </ion-list>
+  <ion-list>
+    <ion-radio-group [(ngModel)]="novoPedido.cobertura" (ionChange)="chekckCoberturas()">
+      <ion-list-header style="background: ghostwhite;">
+        <ion-label style="font-size: large; color: black;">Cobertura</ion-label>
+      </ion-list-header>
+      <ion-item>
+        <ion-label>Chocolate</ion-label>
+        <ion-radio color="light" value="chocolate"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>Morango</ion-label>
+        <ion-radio color="light" value="morango"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>Caramelo</ion-label>
+        <ion-radio color="light" value="caramelo"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>Leite Condençado</ion-label>
+        <ion-radio color="light" value="leite"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>Mel</ion-label>
+        <ion-radio color="light" value="mel"></ion-radio>
+      </ion-item>
+    </ion-radio-group>
+  </ion-list>
+  <ion-list>
+   <ion-list-header style="background: ghostwhite;">
+      <ion-label style="font-size: large; color: black;">Adicional</ion-label>
+    </ion-list-header>
+    <ion-item>
+      <ion-label>
+        <ion-label>Nutella</ion-label>
+        <ion-text>+ R$ 3,00</ion-text>
+      </ion-label>
+      <ion-checkbox color="light" [(ngModel)]="adicionais.isNutella" (ionChange)="checkAdicional()"></ion-checkbox>
+    </ion-item>
+    <ion-item>
+      <ion-label>
+        <ion-label>Gotas de chocolate</ion-label>
+        <ion-text>+ R$ 1,50</ion-text>
+      </ion-label>
+      <ion-checkbox color="light" [(ngModel)]="adicionais.isGotasDeChocolate" (ionChange)="checkAdicional()"></ion-checkbox>
+    </ion-item>
+    <ion-item>
+      <ion-label>
+        <ion-label>Jujuba</ion-label>
+        <ion-text>+ R$ 1,25</ion-text>
+      </ion-label>
+      <ion-checkbox color="light" [(ngModel)]="adicionais.isJujuba" (ionChange)="checkAdicional()"></ion-checkbox>
+    </ion-item>
+    <ion-item>
+      <ion-label>
+        <ion-label>Bis</ion-label>
+        <ion-text>+ R$ 1,50</ion-text>
+      </ion-label>
+      <ion-checkbox color="light" [(ngModel)]="adicionais.isBis" (ionChange)="checkAdicional()"></ion-checkbox>
+    </ion-item>
+    <ion-item>
+      <ion-label>
+        <ion-label>Confets</ion-label>
+        <ion-text>+ R$ 1,50</ion-text>
+      </ion-label>
+      <ion-checkbox color="light" [(ngModel)]="adicionais.isConfets" (ionChange)="checkAdicional()"></ion-checkbox>
+    </ion-item>
+    <ion-item>
+      <ion-label>
+        <ion-label>Tubinhos</ion-label>
+        <ion-text>+ R$ 1,25</ion-text>
+      </ion-label>
+      <ion-checkbox color="light" [(ngModel)]="adicionais.isTubinhos" (ionChange)="checkAdicional()"></ion-checkbox>
+    </ion-item>
+    <ion-item>
+      <ion-label>
+        <ion-label>Oreo</ion-label>
+        <ion-text>+ R$ 1,50</ion-text>
+      </ion-label>
+      <ion-checkbox color="light" [(ngModel)]="adicionais.isOreo" (ionChange)="checkAdicional()"></ion-checkbox>
+    </ion-item>
+    <ion-item>
+      <ion-label>
+        <ion-label>Kit kat</ion-label>
+        <ion-text>+ R$ 1,50</ion-text>
+      </ion-label>
+      <ion-checkbox color="light" [(ngModel)]="adicionais.isKitKat" (ionChange)="checkAdicional()"></ion-checkbox>
+    </ion-item>
+    <ion-item>
+      <ion-label>
+        <ion-label>Creme de leite ninho</ion-label>
+        <ion-text>+ R$ 2,50</ion-text>
+      </ion-label>
+      <ion-checkbox color="light" [(ngModel)]="adicionais.isCremeDeLeiteNinho" (ionChange)="checkAdicional()"></ion-checkbox>
+    </ion-item>
+    <ion-item>
+      <ion-label>
+        <ion-label>Creme de morango</ion-label>
+        <ion-text>+ R$ 2,50</ion-text>
+      </ion-label>
+      <ion-checkbox color="light" [(ngModel)]="adicionais.isCremeDeMorango" (ionChange)="checkAdicional()"></ion-checkbox>
+    </ion-item>
+    <ion-item>
+      <ion-label>
+        <ion-label>Creme de paçoca</ion-label>
+        <ion-text>+ R$ 2,50</ion-text>
+      </ion-label>
+      <ion-checkbox color="light" [(ngModel)]="adicionais.isCrmeDePacoca" (ionChange)="checkAdicional()"></ion-checkbox>
+    </ion-item>
+    <ion-item>
+      <ion-label>
+        <ion-label>Granulado de chocolate</ion-label>
+        <ion-text>+ R$ 1,25</ion-text>
+      </ion-label>
+      <ion-checkbox color="light" [(ngModel)]="adicionais.isGranuladoChocolate" (ionChange)="checkAdicional()"></ion-checkbox>
+    </ion-item>
+    <ion-item>
+      <ion-label>
+        <ion-label>Granulado colorido</ion-label>
+        <ion-text>+ R$ 1,25</ion-text>
+      </ion-label>
+      <ion-checkbox color="light" [(ngModel)]="adicionais.isGranuladoColorido" (ionChange)="checkAdicional()"></ion-checkbox>
+    </ion-item>
+    <ion-item>
+      <ion-label>
+        <ion-label>Amendoim de chocolate</ion-label>
+        <ion-text>+ R$ 1,50</ion-text>
+      </ion-label>
+      <ion-checkbox color="light" [(ngModel)]="adicionais.isAmendChocolate" (ionChange)="checkAdicional()"></ion-checkbox>
+    </ion-item>
+    <ion-item>
+      <ion-label>
+        <ion-label>Nescal cereal</ion-label>
+        <ion-text>+ R$ 1,50</ion-text>
+      </ion-label>
+      <ion-checkbox color="light" [(ngModel)]="adicionais.isNescalCereal" (ionChange)="checkAdicional()"></ion-checkbox>
+    </ion-item>
+    <ion-item>
+      <ion-label>
+        <ion-label>Doce de leite</ion-label>
+        <ion-text>+ R$ 2,50</ion-text>
+      </ion-label>
+      <ion-checkbox color="light" [(ngModel)]="adicionais.isDoceLeite" (ionChange)="checkAdicional()"></ion-checkbox>
+    </ion-item>
+  </ion-list>
+  <ion-label></ion-label>
+
+</ion-content>
+<ion-footer>
+  <ion-toolbar>
+      <ion-label style="margin: 15px;">Valor {{novoPedido.valor | currency:'BRL':'symbol'}}</ion-label>
+      <ion-button [disabled]="!checarRecheio || !checarTamanho || !checkFrutas || !checarCobertura || !checarAcompanhamento" style="margin: 15px;" color="light" slot="end" id="changeText" (click) ="gerarPDF()">
+        <ion-text style="color: #ffffff;">Adicionar</ion-text>
+      </ion-button>
+  </ion-toolbar>
+</ion-footer>
+
+
+
+

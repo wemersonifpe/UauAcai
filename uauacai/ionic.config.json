@@ -1,0 +1,7 @@
+{
+  "name": "uauacai",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
